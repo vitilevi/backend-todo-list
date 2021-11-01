@@ -2,16 +2,20 @@ const { OAuth2Client } = require('google-auth-library');
 
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
-async function validateToken(req, _res, next) {
+async function googleAuth(req, _res, next) {
   const { token } = req.body;
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.CLIENT_ID,
-  });
-  const { name, email, picture } = ticket.getPayload();
-  req.clientInfo = { name, email, picture };
-
-  next();
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    req.body.clientInfo = payload;
+  
+    next();
+  } catch (e) {
+    throw new Error('userNotRegistered');
+  }
 }
 
-module.exports = validateToken;
+module.exports = googleAuth;

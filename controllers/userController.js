@@ -1,5 +1,8 @@
-function login(req, res) {
-  return res.status(200).json({ opa: 'pong' });
+const service = require('../services/userService');
+
+async function login(req, res) {
+  const user = await service.login(req.body.clientInfo);
+  return res.status(200).json({ opa: 'pong', user });
 }
 
 module.exports = {

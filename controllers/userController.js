@@ -5,13 +5,21 @@ async function login(req, res) {
   return res.status(200).json(user);
 }
 
-async function saveTasks(req, res) {
-  const { clientInfo, tasks } = req.body;
-  const updatedTasks = await service.saveTasks(clientInfo, tasks);
-  return res.status(201).json(updatedTasks);
+async function newTask(req, res) {
+  const { clientInfo: { email }, task } = req.body;
+  const tasks = await service.newTask(email, task);
+  return res.status(200).json(tasks);
+}
+
+async function deleteTask(req, res) {
+  const { clientInfo: { email }, task } = req.body;
+  console.log(task, email);
+  await service.deleteTask(email, task);
+  return res.status(203).end();
 }
 
 module.exports = {
   login,
-  saveTasks,
+  newTask,
+  deleteTask,
 };

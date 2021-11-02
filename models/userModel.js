@@ -19,16 +19,21 @@ function newUser(payload) {
     .catch(() => null);
 }
 
-function saveTasks(email, tasks) {
+function newTask(email, task) {
   return connection()
-    .then((db) => db.collection(USER_DB).findOneAndUpdate(
-      { email }, { $set: { tasks } }, { returnNewDocument: true },
-    ))
+    .then((db) => db.collection(USER_DB).updateOne({ email }, { $push: { tasks: task } }))
+    .catch(() => null);
+}
+
+function deleteTask(email, task) {
+  return connection()
+    .then((db) => db.collection(USER_DB).updateOne({ email }, { $pull: { tasks: task } }))
     .catch(() => null);
 }
 
 module.exports = {
   getUser,
   newUser,
-  saveTasks,
+  newTask,
+  deleteTask,
 };

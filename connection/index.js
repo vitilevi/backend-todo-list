@@ -5,7 +5,7 @@ const OPTIONS = {
   useUnifiedTopology: true,
 };
 
-const { MONGO_DB_URL } = process.env;
+const { MONGO_DB_URL, MONGO_DB_NAME } = process.env;
 
 let db = null;
 
@@ -13,7 +13,7 @@ const connection = () =>
   (db
     ? Promise.resolve(db)
     : MongoClient.connect(MONGO_DB_URL, OPTIONS).then((conn) => {
-        db = conn.db('model_example');
+        db = conn.db(MONGO_DB_NAME);
         return db;
       }));
 

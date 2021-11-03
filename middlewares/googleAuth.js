@@ -14,7 +14,9 @@ async function googleAuth(req, _res, next) {
   
     next();
   } catch (e) {
-    throw new Error('userNotRegistered');
+    const error = new Error();
+    error.statusCode = 'invalidUser';
+    throw error;
   }
 }
 

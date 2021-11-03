@@ -8,13 +8,13 @@ async function login(req, res) {
 async function newTask(req, res) {
   const { clientInfo: { email }, task } = req.body;
   const tasks = await service.newTask(email, task);
-  return res.status(200).json(tasks);
+  return res.status(201).json(tasks);
 }
 
 async function deleteTask(req, res) {
   const { clientInfo: { email }, task } = req.body;
   await service.deleteTask(email, task);
-  return res.status(203).end();
+  return res.status(204).end();
 }
 
 async function editTask(req, res) {

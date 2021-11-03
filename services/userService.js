@@ -17,8 +17,13 @@ async function deleteTask(email, task) {
   return model.deleteTask(email, task);
 }
 
+async function editTask(email, tasks) {
+  return model.editTask(email, tasks);
+}
+
 module.exports = {
   login,
   newTask,
   deleteTask,
+  editTask,
 };

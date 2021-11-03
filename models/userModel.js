@@ -31,9 +31,16 @@ function deleteTask(email, task) {
     .catch(() => null);
 }
 
+function editTask(email, tasks) {
+  return connection()
+    .then((db) => db.collection(USER_DB).updateOne({ email }, { $set: { tasks } }))
+    .catch(() => null);
+}
+
 module.exports = {
   getUser,
   newUser,
   newTask,
   deleteTask,
+  editTask,
 };

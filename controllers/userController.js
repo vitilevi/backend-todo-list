@@ -13,13 +13,20 @@ async function newTask(req, res) {
 
 async function deleteTask(req, res) {
   const { clientInfo: { email }, task } = req.body;
-  console.log(task, email);
   await service.deleteTask(email, task);
   return res.status(203).end();
+}
+
+async function editTask(req, res) {
+  const { clientInfo: { email }, tasks } = req.body;
+  console.log(tasks, email);
+  const editedTask = await service.editTask(email, tasks);
+  return res.status(200).json(editedTask);
 }
 
 module.exports = {
   login,
   newTask,
   deleteTask,
+  editTask,
 };

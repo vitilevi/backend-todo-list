@@ -1,13 +1,19 @@
-module.exports = (err, _req, res, _next) => {
-  if (err.isJoi) {
-    return res.status(422).json({
-      error: { message: err.details[0].message },
-    });
-  }
+const errorDictionary = {
+  invalidUser: {
+    status: 401,
+    message: 'Usuário ou senha não encontrados',
+  },
+  badRequest: {
+    status: 400,
+    message: 'Sintaxe inválida',
+  },
+};
 
+module.exports = (err, _req, res, _next) => {
   if (err.statusCode) {
-    return res.status(err.statusCode).json({
-      error: { message: err.message },
+    const { status, message } = errorDictionary[err.statusCode];
+    return res.status(status).json({
+      error: { message },
     });
   }
 

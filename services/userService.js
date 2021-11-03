@@ -1,4 +1,5 @@
 const model = require('../models/userModel');
+const validate = require('../validations/taskValidation');
 
 async function login(clientInfo) {
   const { email, picture, name } = clientInfo;
@@ -10,15 +11,21 @@ async function login(clientInfo) {
 }
 
 async function newTask(email, task) {
-  return model.newTask(email, task);
+  const insertedTask = await model.newTask(email, task);
+  validate.task(insertedTask);
+  return insertedTask;
 }
 
 async function deleteTask(email, task) {
-  return model.deleteTask(email, task);
+  const deletedTask = await model.deleteTask(email, task);
+  validate.task(deletedTask);
+  return deletedTask;
 }
 
 async function editTask(email, tasks) {
-  return model.editTask(email, tasks);
+  const editedTask = await model.editTask(email, tasks);
+  validate.task(editedTask);
+  return editTask;
 }
 
 module.exports = {

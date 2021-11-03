@@ -5,7 +5,8 @@ const googleAuth = require('../middlewares/googleAuth');
 
 router
   .post('/login', rescue(googleAuth), controller.login)
-  .post('/saveTasks', rescue(googleAuth), controller.saveTasks)
-  .get('/salve', (req, res) => res.status(200).json({ opa: 'salvinho' }));
+  .post('/task', rescue(googleAuth), controller.newTask)
+  .delete('/task', rescue(googleAuth), controller.deleteTask)
+  .put('/task', rescue(googleAuth), controller.editTask);
 
 module.exports = router;

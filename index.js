@@ -16,6 +16,6 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+app.listen(PORT || 3001, () => {
+  console.log(`App listening on port ${PORT || 3001}`);
 });
